@@ -57,13 +57,13 @@ Three-tier fallback, run once at boot after Modbus is already initialized (calib
 
 Full write-ups with falsification steps are in the personal bug journal. Summary:
 
-| # | Bug | Root cause |
-|---|---|---|
-| — | UART0 conflict | Modbus UART shared pins with the USB-serial console; moved to GPIO26/27 |
-| — | Reversed current sign | ACS712 IP+/IP− leads swapped |
-| — | Wraparound at negative current | Signed current stored in an unsigned holding register without an intermediate signed type |
-| — | Ground fault via FT232 | Labeled "−" terminal on FT232 breakout was not actually ground — confirmed via multimeter continuity check |
-| — | ADC range mismatch | ACS712's 5 V output range incompatible with ESP32's 3.3 V ADC — caught before wiring, from the datasheet |
+| # | Bug | Root cause | Fix |
+|---|---|---|---|
+| 003a | Modbus lines dead on GPIO16/17 | GPIO16/17 are UART0, shared with USB-serial | Moved to GPIO26/27 |
+| 003b | Current readings stuck near 0 | ACS712 IP+/IP− leads reversed | Swapped IP+/IP− direction (confirmed wiring intact via multimeter first) |
+| 003c | Never got a negative reading | Current stored as `uint16_t` (unsigned) | Changed to signed int |
+| 003d | Readings corrupted after adding a ground wire | Invalid FT232-to-Arduino-Uno ground tie introduced a ground fault | Removed the FT232 ground connection |
+| — | ADC range mismatch | ACS712's 5 V output incompatible with ESP32's 3.3 V ADC | Caught before wiring, from the datasheet — divider added |
 
 ## Hardware validation
 
