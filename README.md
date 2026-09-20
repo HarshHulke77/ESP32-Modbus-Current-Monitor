@@ -22,9 +22,6 @@ No queue between the tasks — just a mutex-protected shared variable (`g_curren
 | GPIO27 | MAX485 DI | Modbus TX |
 | GPIO4 | MAX485 DE + RE (tied together) | HIGH = transmit, LOW = receive |
 
-![Breadboard wiring](images/IMG20260909163415.jpg)
-![Bench setup](images/IMG20260909163423.jpg)
-
 ### Why the divider
 
 The ACS712-05B is a 5 V ratiometric sensor — 2.5 V at 0 A, ±185 mV/A. Fed directly into the ESP32's 3.3 V ADC, the zero-current point already sits outside the ADC's reliable linear range, and anything above +4.3 A exceeds the ADC's absolute maximum input voltage. A 10 kΩ/22 kΩ divider maps the full ±5 A range into roughly 1.08–2.36 V, safely inside the ADC's linear window. Caught on paper before wiring — see Bug Journal entry 002.
