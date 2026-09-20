@@ -22,7 +22,8 @@ No queue between the tasks — just a mutex-protected shared variable (`g_curren
 | GPIO27 | MAX485 DI | Modbus TX |
 | GPIO4 | MAX485 DE + RE (tied together) | HIGH = transmit, LOW = receive |
 
-*(Wiring photos: `/images`)*
+![Breadboard wiring](images/IMG20260909163415.jpg)
+![Bench setup](images/IMG20260909163423.jpg)
 
 ### Why the divider
 
